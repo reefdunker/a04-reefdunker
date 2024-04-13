@@ -1,0 +1,61 @@
+<html>
+    <head>
+     <script>
+
+function getGitHub(data) {
+
+const js_user = document.getElementById("htmluser");
+const js_company = document.getElementById("htmlcompany");
+const js_location = document.getElementById("htmllocation");
+const js_github = document.getElementById("htmlgithub");
+const js_avatar = document.getElementById("htmlavatar");
+
+
+js_user.innerHTML = data.name;
+js_company.innerHTML = data.company;
+js_location.innerHTML = data.location;
+js_github.innerHTML = "<a href='" + data.html_url + "'' target=top>" + data.html_url + "</a>";
+js_avatar.innerHTML = "<img src='" + data.avatar_url + "'>";
+
+if (data.name == null) {
+    js_user.innerHTML = 'N/A'
+};
+if (data.company == null) {
+    js_company.innerHTML = 'N/A'
+};
+if (data.location== null) {
+    js_location.innerHTML = 'N/A'
+};
+
+
+}
+
+document.addEventListener("click", function (event) {
+
+if (!event.target.matches("#button")) return;
+
+fetch('https://api.github.com/users/'+ document.getElementById('testgithub').value)
+    .then(response =>{
+        return response.json();
+  }).then(data =>{
+        getGitHub(data);
+        console.log(data);
+})
+});
+
+     </script>
+    </head>
+    <body>
+
+    What is your GitHub page? <input type="text" value="reefdunker" id=testgithub> &nbsp <button id="button" type='button'>Get User</button>
+    <br><br>
+<table>
+  <tr><td align=right><b>Name:</b></td><td><p id="htmluser"></p></td></tr>
+  <tr><td align=right><b>Company:</b></td><td><p id="htmlcompany"></p></td></tr>
+  <tr><td align=right><b>Location:</b></td><td><p id="htmllocation"></p></td></tr>
+  <tr><td align=right><b>Git Hub URL:</b></td><td><p id="htmlgithub"></p></td></tr>
+  <tr><td align=right align="center" colspan="2"><p id="htmlavatar"></p></td></tr>
+</table>
+    </body>
+    </html>
+    
